@@ -7,70 +7,33 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <!--<title>Registration Form in HTML CSS</title>-->
     <!---Custom CSS File--->
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/stylesEstatus.css" />
   </head>
   <body>
     <section class="container">
       <header>Formulario - Estatus</header>
       <form action="#" class="form">
-        <div class="input-box">
-          <label>Nombre completo</label>
-          <input type="text" placeholder="Nombre completo" required />
+        <div class="column">
+          <div class="input-box">
+            <label>Folio</label>
+            <input type="number" placeholder="Número de folio" />
+          </div>
+          <div class="input-box">
+            <label>ID Único</label>
+            <input type="number" placeholder="ID" />
+          </div>
         </div>
 
         <div class="input-box">
           <label>Clave Única de Registro Poblacional</label>
-          <input type="text" placeholder="CURP" required />
+          <input type="text" placeholder="CURP" />
         </div>
 
-        <div class="column">
-          <div class="input-box">
-            <label>Teléfono</label>
-            <input type="number" placeholder="" required />
-          </div>
-          <div class="input-box">
-            <label>Birth Date</label>
-            <input type="date" placeholder="Enter birth date" required />
-          </div>
+        <div class="input-box">
+          <label>Nombre completo</label>
+          <input type="text" placeholder="Nombre completo" />
         </div>
-        <div class="gender-box">
-          <h3>Gender</h3>
-          <div class="gender-option">
-            <div class="gender">
-              <input type="radio" id="check-male" name="gender" checked />
-              <label for="check-male">male</label>
-            </div>
-            <div class="gender">
-              <input type="radio" id="check-female" name="gender" />
-              <label for="check-female">Female</label>
-            </div>
-            <div class="gender">
-              <input type="radio" id="check-other" name="gender" />
-              <label for="check-other">prefer not to say</label>
-            </div>
-          </div>
-        </div>
-        <div class="input-box address">
-          <label>Address</label>
-          <input type="text" placeholder="Enter street address" required />
-          <input type="text" placeholder="Enter street address line 2" required />
-          <div class="column">
-            <div class="select-box">
-              <select>
-                <option hidden>Country</option>
-                <option>America</option>
-                <option>Japan</option>
-                <option>India</option>
-                <option>Nepal</option>
-              </select>
-            </div>
-            <input type="text" placeholder="Enter your city" required />
-          </div>
-          <div class="column">
-            <input type="text" placeholder="Enter your region" required />
-            <input type="number" placeholder="Enter postal code" required />
-          </div>
-        </div>
+
         <button>Submit</button>
       </form>
     </section>

@@ -12,27 +12,38 @@
   <body>
     <section class="container">
       <header>Formulario - Estatus</header>
-      <form action="" class="form">
+      <form action="/formularioEstatus" class="form" method="post">
         <div class="column">
           <div class="input-box">
             <label>Folio</label>
-            <input type="number" placeholder="Número de folio" />
+            <input type="number" placeholder="Número de folio" name="num_folio" />
           </div>
           <div class="input-box">
             <label>ID Único</label>
-            <input type="number" placeholder="ID" />
+            <input type="number" placeholder="ID" name="id_unico" />
           </div>
         </div>
 
         <div class="input-box">
           <label>Clave Única de Registro Poblacional</label>
-          <input type="text" placeholder="CURP" />
+          <input type="text" placeholder="CURP" name="curp" />
         </div>
 
         <div class="input-box">
           <label>Nombre completo</label>
-          <input type="text" placeholder="Nombre completo" />
+          <input type="text" placeholder="Nombre completo" name="fullname" />
         </div>
+
+        <div class="input-box">
+          <label for="tramite"></label>
+          <input type="hidden" name="estatus" id="tramite" value="estatus" />
+        </div>
+
+        <div class="input-box">
+          <label>Comentarios</label>
+          <textarea name="comentario" id="" cols="30" rows="10" style="resize: none;" placeholder="Notas"></textarea>
+        </div>
+      
 
         <button>Enviar</button>
       </form>

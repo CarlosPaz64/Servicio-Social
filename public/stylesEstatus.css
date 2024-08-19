@@ -54,6 +54,21 @@ body {
 .input-box input:focus {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
 }
+.form :where(.input-box textarea,) {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  outline: none;
+  font-size: 1rem;
+  color: #707070;
+  margin-top: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0 15px;
+}
+.input-box textarea:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
 .form .column {
   display: flex;
   column-gap: 15px;

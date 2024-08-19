@@ -19,7 +19,18 @@ app.get('/', (req, res) => {
 app.get('/formularioEstatus/index.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'formularioEstatus', 'index.html'));
   });
+
+  app.get('/formulario-baja/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'formulario-baja', 'index.html'));
+  });
   
+  app.get('/formulario-reposicion/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'formulario-reposicion', 'index.html'));
+  });
+
+  app.get('/formulario-actualizaciondedatos/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'formulario-actualizaciondedatos', 'index.html'));
+  });
 
 // Iniciando el servidor
 app.listen(PORT, () => {

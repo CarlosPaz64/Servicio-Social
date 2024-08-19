@@ -15,6 +15,18 @@ body {
   min-height: 100vh;
   background: url("images/bg.jpg") #030728 no-repeat center;
 }
+.header{
+  background-color: #f4f4f4;
+  padding: 20px;
+  top: 0;
+  text-align: center;
+}
+nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+}
 
 .slider-wrapper {
   overflow: hidden;

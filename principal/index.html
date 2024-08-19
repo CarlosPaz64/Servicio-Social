@@ -10,6 +10,9 @@
   <link rel="stylesheet" href="/stylesPrincipal.css">
 </head>
 <body>
+<!--  <header class="header">
+    <nav><img src="imagen.png" alt="User Image" class="user-image"></nav>
+  </header>-->
   <div class="container swiper">
     <div class="slider-wrapper">
       <div class="card-list swiper-wrapper">
@@ -31,14 +34,14 @@
           <img src="imagen.png" alt="User Image" class="user-image">
           <h2 class="user-name">Reposición</h2>
           <p class="user-profession"></p>
-          <button class="message-button">Verificar</button>
+          <button class="message-button" id="Reposicion">Verificar</button>
         </div>
 
         <div class="card-item swiper-slide">
           <img src="imagen.png" alt="User Image" class="user-image">
           <h2 class="user-name">Actualización de datos</h2>
           <p class="user-profession"></p>
-          <button class="message-button">Verificar</button>
+          <button class="message-button" id="Datos">Verificar</button>
         </div>
       </div>
 
@@ -88,6 +91,15 @@
 // Selecciona el boton por el ID y le da la función de mandarlo a otra página
 document.getElementById("Estatus").onclick = function(){
     window.location.href = ("/formularioEstatus/index.html")
+}
+document.getElementById("Baja").onclick = function(){
+    window.location.href = ("/formulario-baja/index.html")
+}
+document.getElementById("Reposicion").onclick = function(){
+    window.location.href = ("/formulario-reposicion/index.html")
+}
+document.getElementById("Datos").onclick = function(){
+    window.location.href = ("/formulario-actualizaciondedatos/index.html")
 }
   </script>
 </body>

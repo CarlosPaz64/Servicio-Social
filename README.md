@@ -54,6 +54,7 @@ HTML:
 </html>
 ```
 CSS: 
+```
 .form :where(.input-box textarea,) {
   position: relative;
   height: 100%;
@@ -69,3 +70,4 @@ CSS:
 .input-box textarea:focus {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
 }
+```

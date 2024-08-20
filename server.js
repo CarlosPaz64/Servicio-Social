@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const formularioEstatusRoute = require('./routes/formularioEstatus');
+const formularioBajaRoute = require('./routes/formularioBaja');
 const http = require('http');
 const socketIo = require('socket.io');
 
@@ -32,6 +33,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 const formularioEstatusRouteWithIo = formularioEstatusRoute(io);
 app.use('/formularioEstatus', formularioEstatusRouteWithIo);
 
+// Pasar `io` al enrutador de `formularioBaja`
+const formularioBajaRouteWithIo = formularioBajaRoute(io);
+app.use('/formularioBaja', formularioBajaRouteWithIo);
+
 // Redirigir a index.html cuando se acceda a la raíz
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'principal', 'index.html'));
@@ -40,6 +45,11 @@ app.get('/', (req, res) => {
 // Redirigir a index.html cuando se acceda a la carpeta del estatus
 app.get('/formularioEstatus/index.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'formularioEstatus', 'index.html'));
+});
+
+// Redirigir a index.html cuando se acceda a la carpeta del estatus
+app.get('/formularioBaja/index.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'formularioBaja', 'index.html'));
 });
 
 // Redirigir a index.html cuando se acceda a la carpeta del estatus

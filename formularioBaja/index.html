@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!---Coding By CodingLab | www.codinglabweb.com--->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario - Baja</title>
+    <!--<title>Registration Form in HTML CSS</title>-->
+    <!---Custom CSS File--->
+    <link rel="stylesheet" href="/stylesEstatus.css" />
+    <link rel="icon" href="/logo.png" type="image/png">
+  </head>
+  <body>
+    <section class="container">
+      <header>Formulario - Baja</header>
+      <form action="/formularioBaja" class="form" method="post">
+        <div class="column">
+          <div class="input-box">
+            <label>Folio</label>
+            <input type="number" placeholder="Número de folio" name="num_folio" />
+          </div>
+          <div class="input-box">
+            <label>ID Único</label>
+            <input type="number" placeholder="ID" name="id_unico" />
+          </div>
+        </div>
+
+        <div class="input-box">
+          <label>Clave Única de Registro Poblacional</label>
+          <input type="text" placeholder="CURP" name="curp" pattern=".{18}" title="El CURP debe tener exactamente 18 caracteres." required>
+      </div>
+      
+      
+
+        <div class="input-box">
+          <label>Nombre completo</label>
+          <input type="text" placeholder="Nombre completo" name="fullname" />
+        </div>
+
+        <div class="input-box">
+          <label for="tramite"></label>
+          <input type="hidden" name="estatus" id="tramite" value="baja" />
+        </div>
+
+        <div class="input-box">
+          <label>Comentarios</label>
+          <textarea name="comentario" id="" cols="30" rows="10" style="resize: none;" placeholder="Notas"></textarea>
+        </div>
+      
+
+        <button>Enviar</button>
+      </form>
+    </section>
+  </body>
+</html>

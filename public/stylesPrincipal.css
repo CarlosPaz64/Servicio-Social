@@ -13,7 +13,8 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: url("images/bg.jpg") #030728 no-repeat center;
+  background: rgb(157, 36, 73);
+
 }
 .header{
   background-color: #f4f4f4;

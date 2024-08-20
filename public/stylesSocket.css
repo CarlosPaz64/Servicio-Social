@@ -1,11 +1,11 @@
 body {
-    background-color: #91ced4;
+    background-color: rgb(157, 36, 73);;
 }
 body * {
     box-sizing: border-box;
 }
 .header {
-    background-color: #327a81;
+    background-color: rgb(36, 157, 127);
     color: white;
     font-size: 1.5em;
     padding: 1rem;
@@ -18,7 +18,7 @@ img {
     width: 60px;
 }
 .table-users {
-    border: 1px solid #327a81;
+    border: 1px solid rgb(157, 36, 73);;
     border-radius: 10px;
     box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
     max-width: calc(100% - 2em);
@@ -47,10 +47,10 @@ table th {
     font-weight: 300;
 }
 table tr:nth-child(2n) {
-    background-color: white;
+    background-color: rgb(178, 233, 219);;
 }
 table tr:nth-child(2n+1) {
-    background-color: #edf7f8;
+    background-color: rgb(250, 184, 204);;
 }
 @media screen and (max-width: 700px) {
     table, tr, td {

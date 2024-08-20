@@ -29,24 +29,38 @@
 
      <!-- Incluir el cliente de Socket.io -->
      <script src="/socket.io/socket.io.js"></script>
-<script>
-    const socket = io();
+     <script>
+         const socket = io();
 
-    // Recibir un nuevo registro del servidor
-    socket.on('newRecord', (tramite) => {
-        const tramitesTable = document.getElementById('tramitesTable');
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${tramite.num_folio}</td>
-            <td>${tramite.id_unico}</td>
-            <td>${tramite.curp}</td>
-            <td>${tramite.fullname}</td>
-            <td>${tramite.tramite}</td>
-            <td>${tramite.comentario}</td>
-        `;
-        tramitesTable.appendChild(row);
-    });
-</script>
-   
+         // Función para agregar un registro a la tabla
+         function addRowToTable(tramite) {
+             const tramitesTable = document.getElementById('tramitesTable');
+             const row = document.createElement('tr');
+             row.innerHTML = `
+                 <td>${tramite.num_folio}</td>
+                 <td>${tramite.id_unico}</td>
+                 <td>${tramite.curp}</td>
+                 <td>${tramite.fullname}</td>
+                 <td>${tramite.tramite}</td>
+                 <td>${tramite.comentario}</td>
+             `;
+             tramitesTable.appendChild(row);
+         }
+
+         // Cargar todos los registros actuales al iniciar
+         fetch('/formularioEstatus/api/tramites')
+             .then(response => response.json())
+             .then(data => {
+                 data.forEach(tramite => {
+                     addRowToTable(tramite);
+                 });
+             })
+             .catch(error => console.error('Error al cargar los trámites:', error));
+
+         // Recibir un nuevo registro del servidor
+         socket.on('newRecord', (tramite) => {
+             addRowToTable(tramite);
+         });
+     </script>
 </body>
 </html>

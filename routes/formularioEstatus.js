@@ -4,6 +4,7 @@ const pool = require('../database/database'); // Asegúrate de que este sea el c
 module.exports = (io) => {
     const router = express.Router();
 
+    // Función para manejar la inserción y emisión de un nuevo registro
     const registrarEstatus = async (req, res) => {
         const { num_folio, id_unico, curp, fullname, estatus, comentario } = req.body;
 
@@ -31,8 +32,19 @@ module.exports = (io) => {
         }
     };
 
-    // Configura la ruta POST para /formularioEstatus
+    // Ruta POST para insertar y emitir un nuevo registro
     router.post('/', registrarEstatus);
+
+    // Ruta GET para obtener todos los registros actuales
+    router.get('/api/tramites', async (req, res) => {
+        try {
+            const [rows] = await pool.execute('SELECT num_folio, id_unico, curp, fullname, tramite, comentario FROM tramites_verificacion');
+            res.json(rows); // Devuelve los registros en formato JSON
+        } catch (error) {
+            console.error('Error al obtener los trámites:', error);
+            res.status(500).send('Error al obtener los trámites');
+        }
+    });
 
     return router;
 };

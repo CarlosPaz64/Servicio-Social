@@ -27,8 +27,10 @@
 
         <div class="input-box">
           <label>Clave Única de Registro Poblacional</label>
-          <input type="text" placeholder="CURP" name="curp" />
-        </div>
+          <input type="text" placeholder="CURP" name="curp" pattern=".{18}" title="El CURP debe tener exactamente 18 caracteres." required>
+      </div>
+      
+      
 
         <div class="input-box">
           <label>Nombre completo</label>

@@ -1,4 +1,4 @@
-const pool = require('../database/database'); // Importa el pool de conexiones
+/*const pool = require('../database/database'); // Importa el pool de conexiones
 
 const registrarEstatus = async (req, res) => {
     const { num_folio, id_unico, curp, fullname, estatus, comentario } = req.body;
@@ -20,3 +20,4 @@ module.exports = {
     registrarEstatus
 };
 
+*/

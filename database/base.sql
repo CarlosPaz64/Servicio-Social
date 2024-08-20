@@ -14,7 +14,7 @@ num_folio VARCHAR(255),
 id_unico VARCHAR(255),
 curp VARCHAR(100),
 fullname VARCHAR(255),
-tramite VARCHAR(255) NOT NULL
+tramite VARCHAR(255) NOT NULL,
 );
 
 -- DROP DATABASE verificacion;

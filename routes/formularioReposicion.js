@@ -1,8 +1,7 @@
-/*const express = require('express');
+const express = require('express');
 const router = express.Router();
-const estatusController = require("../controllers/formularioEstatus");
+const reposicionController = require("../controllers/formularioReposicion");
 
-router.post('/', estatusController.registrarEstatus);
+router.post('/', reposicionController.registrarRepos);
 
 module.exports = router;
-*/

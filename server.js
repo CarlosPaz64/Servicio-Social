@@ -54,5 +54,5 @@ app.get('/formulario-actualizaciondedatos/index.html', (req, res) => {
 
 // Iniciando el servidor
 app.listen(PORT, () => {
-  console.log(`Servidor iniciado en el puerto ${PORT}`);
+  console.log(`Servidor iniciado en http://localhost:3000/`);
 });

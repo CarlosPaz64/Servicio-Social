@@ -51,5 +51,20 @@
         <button>Enviar</button>
       </form>
     </section>
+    <script>
+             document.querySelector('form').addEventListener('submit', function(e) {
+    // Obteniendo todos los inputs y textareas
+    const inputs = document.querySelectorAll('input[type="text"], textarea');
+
+    inputs.forEach(input => {
+      // Validando que no contenga caracteres prohibidos
+      if (/[<>]/.test(input.value)) {
+        e.preventDefault();  // Evita que el formulario se envíe
+        alert('Por favor, no ingrese caracteres como < o >.');
+        return;
+      }
+    });
+  });
+    </script>
   </body>
 </html>

@@ -86,23 +86,23 @@ table tr:nth-child(2n+1) {
         position: absolute;
    }
     td:nth-child(2):before {
-        content: 'Name:';
+        content: 'ID:';
    }
     td:nth-child(3):before {
-        content: 'Email:';
+        content: 'CURP:';
    }
     td:nth-child(4):before {
-        content: 'Phone:';
+        content: 'Nombre completo:';
    }
     td:nth-child(5):before {
-        content: 'Comments:';
+        content: 'Comentarios:';
    }
     tr {
         padding: 10px 0;
         position: relative;
    }
-    tr:first-child {
-        display: none;
+   thead tr{
+    display: none;
    }
 }
 @media screen and (max-width: 500px) {
@@ -155,5 +155,8 @@ table tr:nth-child(2n+1) {
         border: none;
         box-shadow: none;
         overflow: visible;
+   }
+   thead tr{
+    display: none;
    }
 }

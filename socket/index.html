@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trámites Verificación</title>
+    <title>Secretaría de Bienestar | Gobierno | Yucatán</title>
     <link rel="stylesheet" href="/stylesSocket.css">
+    <link rel="icon" href="logo.png" type="image/x-icon">
 </head>
 <body>
     <div class="table-users">
@@ -44,7 +45,7 @@
              if (Notification.permission === "granted") {
                  const notification = new Notification("¡Se ha subido un nuevo registro!", {
                      body: `Folio: ${tramite.num_folio}, Nombre: ${tramite.fullname}`,
-                     icon: "escudo-mx.png"
+                     icon: `C:\Users\Usuario1-Servicio\Documents\Servicio Social\public\logo.png`
                  });
              }
          }

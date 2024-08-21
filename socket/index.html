@@ -28,14 +28,14 @@
         </table>
      </div>
 
-     <!-- Incluir el cliente de Socket.io -->
+     <!-- Inclusón del cliente de Socket.io -->
      <script src="/socket.io/socket.io.js"></script>
      <script>
          const socket = io();
          let registroCount = 0;
          let pageCount = 1;
 
-         // Pedir permiso para mostrar notificaciones
+         // Pedido de permisos para las notificaciones
          if (Notification.permission !== "granted") {
              Notification.requestPermission();
          }

@@ -57,6 +57,15 @@
           let isEmpty = true;
 
           inputs.forEach(input => {
+            // Validando que no contenga caracteres prohibidos
+            if (/[<>]/.test(input.value)) {
+              e.preventDefault();  // Evita que el formulario se envíe
+              alert('Por favor, no ingrese caracteres como < o >.');
+              return;
+            }
+          });
+
+          inputs.forEach(input => {
               if (input.value.trim() !== "") {
                   isEmpty = false;
               }

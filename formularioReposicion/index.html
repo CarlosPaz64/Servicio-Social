@@ -45,18 +45,26 @@
             <button type="submit">Enviar</button>
         </form>
     </section>
-
     <script>
         document.querySelector('form').addEventListener('submit', function(e) {
             const inputs = document.querySelectorAll('input[type="text"], input[type="number"], textarea');
             let isEmpty = true;
-
+  
+            inputs.forEach(input => {
+              // Validando que no contenga caracteres prohibidos
+              if (/[<>]/.test(input.value)) {
+                e.preventDefault();  // Evita que el formulario se envíe
+                alert('Por favor, no ingrese caracteres como < o >.');
+                return;
+              }
+            });
+  
             inputs.forEach(input => {
                 if (input.value.trim() !== "") {
                     isEmpty = false;
                 }
             });
-
+  
             if (isEmpty) {
                 e.preventDefault();
                 alert('Por favor, complete al menos un campo antes de enviar el formulario.');

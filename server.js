@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const formularioEstatusRoute = require('./routes/formularioEstatus');
 const formularioBajaRoute = require('./routes/formularioBaja');
+const formularioRepoRoute = require('./routes/formularioReposicion');
+const formularioActRoute = require('./routes/formularioActualizacion');
 const http = require('http');
 const socketIo = require('socket.io');
 
@@ -29,6 +31,8 @@ const PORT = 3000;
 // Sirviendo archivos estáticos desde la carpeta "public"
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Rutas del socket.io
+
 // Pasar `io` al enrutador de `formularioEstatus`
 const formularioEstatusRouteWithIo = formularioEstatusRoute(io);
 app.use('/formularioEstatus', formularioEstatusRouteWithIo);
@@ -36,6 +40,16 @@ app.use('/formularioEstatus', formularioEstatusRouteWithIo);
 // Pasar `io` al enrutador de `formularioBaja`
 const formularioBajaRouteWithIo = formularioBajaRoute(io);
 app.use('/formularioBaja', formularioBajaRouteWithIo);
+
+// Pasar `io` al enrutador de `formularioReposicion`
+const formularioRepoWithIo = formularioRepoRoute(io);
+app.use('/formularioReposicion', formularioRepoWithIo);
+
+// Pasar `io` al enrutador de `formularioActualizacion`
+const formularioActWithIo = formularioActRoute(io);
+app.use('/formularioActualizacion', formularioActWithIo);
+
+// Rutas de las vistas de la aplicacion
 
 // Redirigir a index.html cuando se acceda a la raíz
 app.get('/', (req, res) => {
@@ -51,6 +65,19 @@ app.get('/formularioEstatus/index.html', (req, res) => {
 app.get('/formularioBaja/index.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'formularioBaja', 'index.html'));
 });
+
+// Redirigir a index.html cuando se acceda a la carpeta del estatus
+app.get('/formularioReposicion/index.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'formularioReposicion', 'index.html'));
+});
+
+// Redirigir a index.html cuando se acceda a la carpeta del estatus
+app.get('/formularioActualizacion/index.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'formularioActualizacion', 'index.html'));
+});
+
+
+// Vista del socket.io
 
 // Redirigir a index.html cuando se acceda a la carpeta del estatus
 app.get('/socket', (req, res) => {
@@ -85,5 +112,5 @@ io.on('connection', (socket) => {
 
 // Iniciando el servidor
 server.listen(PORT, () => {
-  console.log(`Servidor iniciado en el puerto ${PORT}`);
+  console.log(`Servidor iniciado en: http://localhost:3000/`);
 });

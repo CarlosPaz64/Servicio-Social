@@ -32,14 +32,14 @@
           <img src="logobienestar.jpg" alt="User Image" class="user-image">
           <h2 class="user-name">Reposición</h2>
           <p class="user-profession"></p>
-          <button class="message-button">Verificar</button>
+          <button class="message-button" id="Reposicion">Verificar</button>
         </div>
 
         <div class="card-item swiper-slide">
           <img src="logobienestar.jpg" alt="User Image" class="user-image">
           <h2 class="user-name">Actualización de datos</h2>
           <p class="user-profession"></p>
-          <button class="message-button">Verificar</button>
+          <button class="message-button" id="Actualizacion">Verificar</button>
         </div>
       </div>
 
@@ -94,6 +94,16 @@ document.getElementById("Estatus").onclick = function(){
 // Selecciona el boton por el ID y le da la función de mandarlo a otra página
 document.getElementById("Baja").onclick = function(){
     window.location.href = ("/formularioBaja/index.html")
+}
+
+// Selecciona el boton por el ID y le da la función de mandarlo a otra página
+document.getElementById("Reposicion").onclick = function(){
+    window.location.href = ("/formularioReposicion/index.html")
+}
+
+// Selecciona el boton por el ID y le da la función de mandarlo a otra página
+document.getElementById("Actualizacion").onclick = function(){
+    window.location.href = ("/formularioActualizacion/index.html")
 }
   </script>
 </body>

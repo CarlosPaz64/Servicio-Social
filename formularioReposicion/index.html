@@ -1,70 +1,67 @@
 <!DOCTYPE html>
-<!---Coding By CodingLab | www.codinglabweb.com--->
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario - Reposición</title>
-    <!--<title>Registration Form in HTML CSS</title>-->
-    <!---Custom CSS File--->
-    <link rel="stylesheet" href="/stylesRepos.css" />
+    <link rel="stylesheet" href="/stylesRepos.css">
     <link rel="icon" href="/logo.png" type="image/png">
-  </head>
-  <body>
+</head>
+<body>
     <section class="container">
-      <header>Formulario - Reposición</header>
-      <form action="/formularioReposicion" class="form" method="post">
-        <div class="column">
-          <div class="input-box">
-            <label>Folio</label>
-            <input type="number" placeholder="Número de folio" name="num_folio" />
-          </div>
-          <div class="input-box">
-            <label>ID Único</label>
-            <input type="number" placeholder="ID" name="id_unico" />
-          </div>
-        </div>
+        <header>Formulario - Reposición</header>
+        <form action="/formularioReposicion" class="form" method="post">
+            <div class="column">
+                <div class="input-box">
+                    <label>Folio</label>
+                    <input type="number" placeholder="Número de folio" name="num_folio">
+                </div>
+                <div class="input-box">
+                    <label>ID Único</label>
+                    <input type="number" placeholder="ID" name="id_unico">
+                </div>
+            </div>
 
-        <div class="input-box">
-          <label>Clave Única de Registro Poblacional</label>
-          <input type="text" placeholder="CURP" name="curp" pattern=".{18}" title="El CURP debe tener exactamente 18 caracteres.">
-      </div>
-      
-      
+            <div class="input-box">
+                <label>Clave Única de Registro Poblacional</label>
+                <input type="text" placeholder="CURP" name="curp" pattern=".{18}" title="El CURP debe tener exactamente 18 caracteres.">
+            </div>
 
-        <div class="input-box">
-          <label>Nombre completo</label>
-          <input type="text" placeholder="Nombre completo" name="fullname" />
-        </div>
+            <div class="input-box">
+                <label>Nombre completo</label>
+                <input type="text" placeholder="Nombre completo" name="fullname">
+            </div>
 
-        <div class="input-box">
-          <label for="tramite"></label>
-          <input type="hidden" name="estatus" id="tramite" value="Reposición de tarjeta" />
-        </div>
+            <div class="input-box">
+                <label for="tramite"></label>
+                <input type="hidden" name="estatus" id="tramite" value="Reposición de tarjeta">
+            </div>
 
-        <div class="input-box">
-          <label>Comentarios</label>
-          <textarea name="comentario" id="" cols="30" rows="10" style="resize: none;" placeholder="Notas"></textarea>
-        </div>
-      
+            <div class="input-box">
+                <label>Comentarios</label>
+                <textarea name="comentario" id="" cols="30" rows="10" style="resize: none;" placeholder="Notas"></textarea>
+            </div>
 
-        <button>Enviar</button>
-      </form>
+            <button type="submit">Enviar</button>
+        </form>
     </section>
-    <script>
-             document.querySelector('form').addEventListener('submit', function(e) {
-    // Obteniendo todos los inputs y textareas
-    const inputs = document.querySelectorAll('input[type="text"], textarea');
 
-    inputs.forEach(input => {
-      // Validando que no contenga caracteres prohibidos
-      if (/[<>]/.test(input.value)) {
-        e.preventDefault();  // Evita que el formulario se envíe
-        alert('Por favor, no ingrese caracteres como < o >.');
-        return;
-      }
-    });
-  });
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const inputs = document.querySelectorAll('input[type="text"], input[type="number"], textarea');
+            let isEmpty = true;
+
+            inputs.forEach(input => {
+                if (input.value.trim() !== "") {
+                    isEmpty = false;
+                }
+            });
+
+            if (isEmpty) {
+                e.preventDefault();
+                alert('Por favor, complete al menos un campo antes de enviar el formulario.');
+            }
+        });
     </script>
-  </body>
+</body>
 </html>

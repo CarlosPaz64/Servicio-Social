@@ -19,6 +19,7 @@ body * {
     padding: 1rem;
     text-align: center;
     text-transform: uppercase;
+    font-weight: bold;
 }
 img {
     border-radius: 50%;
@@ -52,7 +53,7 @@ table td:last-child {
 }
 table th {
     background-color: #daeff1;
-    font-weight: 300;
+    font-weight: bold;
 }
 table tr:nth-child(2n) {
     background-color: rgb(178, 233, 219);;

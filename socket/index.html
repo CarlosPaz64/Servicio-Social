@@ -31,10 +31,55 @@
      <script src="/socket.io/socket.io.js"></script>
      <script>
          const socket = io();
+         let registroCount = 0;
+         let pageCount = 1;
+
+         // Pedir permiso para mostrar notificaciones
+         if (Notification.permission !== "granted") {
+             Notification.requestPermission();
+         }
+
+         // Función para mostrar notificación
+         function showNotification(tramite) {
+             if (Notification.permission === "granted") {
+                 const notification = new Notification("¡Se ha subido un nuevo registro!", {
+                     body: `Folio: ${tramite.num_folio}, Nombre: ${tramite.fullname}`,
+                     icon: "/public/escudo-mx.png"
+                 });
+             }
+         }
 
          // Función para agregar un registro a la tabla
          function addRowToTable(tramite) {
-             const tramitesTable = document.getElementById('tramitesTable');
+             registroCount++;
+
+             if (registroCount > 10 * pageCount) {
+                 pageCount++;
+                 registroCount = 1;
+                 // Crea una nueva tabla o página
+                 const newPage = document.createElement('div');
+                 newPage.classList.add('table-users');
+                 newPage.innerHTML = `
+                     <div class="header">Trámites Verificación - Página ${pageCount}</div>
+                     <table cellspacing="0">
+                         <thead>
+                             <tr>
+                                <th>Folio</th>
+                                <th>ID Único</th>
+                                <th>CURP</th>
+                                <th>Nombre Completo</th>
+                                <th>Trámite</th>
+                                <th>Comentario</th>
+                             </tr>
+                         </thead>
+                         <tbody id="tramitesTable${pageCount}">
+                         </tbody>
+                     </table>
+                 `;
+                 document.body.appendChild(newPage);
+             }
+
+             const tramitesTable = document.getElementById(`tramitesTable${pageCount}`) || document.getElementById('tramitesTable');
              const row = document.createElement('tr');
              row.innerHTML = `
                  <td>${tramite.num_folio}</td>
@@ -60,6 +105,7 @@
          // Recibir un nuevo registro del servidor
          socket.on('newRecord', (tramite) => {
              addRowToTable(tramite);
+             showNotification(tramite);
          });
      </script>
 </body>

@@ -66,7 +66,7 @@ body {
 }
 
 .card-list .card-item .message-button:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgb(157, 36, 73);
   border: 1px solid #fff;
   color: #fff;
 }
@@ -89,7 +89,7 @@ body {
 }
 
 .slider-wrapper .swiper-slide-button:hover {
-  color: #4658ff;
+  color: rgb(230, 134, 163);
 }
 
 @media (max-width: 768px) {

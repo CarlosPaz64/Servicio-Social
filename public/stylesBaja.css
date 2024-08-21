@@ -12,7 +12,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: rgb(130, 106, 251);
+  background: rgb(157, 36, 73);
 }
 .container {
   position: relative;
@@ -121,10 +121,10 @@ body {
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
-  background: rgb(130, 106, 251);
+  background: rgb(157, 36, 73);
 }
 .form button:hover {
-  background: rgb(88, 56, 250);
+  background: rgb(82, 13, 33);
 }
 /*Responsive*/
 @media screen and (max-width: 500px) {

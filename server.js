@@ -27,7 +27,7 @@ dotenv.config();
 
 // Configuración del puerto
 const PORT = 3000;
-const HOST =  '192.168.100.174';
+const HOST =  process.env.HOST;
 
 // Sirviendo archivos estáticos desde la carpeta "public"
 app.use(express.static(path.join(__dirname, 'public')));

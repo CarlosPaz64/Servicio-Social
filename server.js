@@ -27,6 +27,7 @@ dotenv.config();
 
 // Configuración del puerto
 const PORT = 3000;
+const HOST =  '192.168.100.174';
 
 // Sirviendo archivos estáticos desde la carpeta "public"
 app.use(express.static(path.join(__dirname, 'public')));
@@ -111,6 +112,6 @@ io.on('connection', (socket) => {
 });
 
 // Iniciando el servidor
-server.listen(PORT, () => {
-  console.log(`Servidor iniciado en: http://localhost:3000/`);
+server.listen(PORT, HOST, () => {
+  console.log(`Servidor iniciado en http://${HOST}:${PORT}`);
 });

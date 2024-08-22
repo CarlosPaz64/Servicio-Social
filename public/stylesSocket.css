@@ -56,10 +56,10 @@ table th {
     font-weight: bold;
 }
 table tr:nth-child(2n) {
-    background-color: rgb(178, 233, 219);;
+    background-color: #daeff1;
 }
 table tr:nth-child(2n+1) {
-    background-color: rgb(250, 184, 204);;
+    background-color:rgb(178, 233, 219);
 }
 @media screen and (max-width: 700px) {
     table, tr, td {

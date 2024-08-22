@@ -92,6 +92,26 @@ body {
   color: rgb(230, 134, 163);
 }
 
+/*Nuevo CSS*/
+.slider-wrapper .message-button {
+  font-size: 1.25rem;
+  padding: 10px 35px;
+  color: #030728;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid transparent;
+  transition: 0.2s ease;
+}
+
+.slider-wrapper .message-button:hover {
+  background: rgb(157, 36, 73);
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+
 @media (max-width: 768px) {
   .slider-wrapper {
     margin: 0 10px 40px;

@@ -15,7 +15,8 @@ id_unico VARCHAR(255),
 curp VARCHAR(100),
 fullname VARCHAR(255),
 tramite VARCHAR(255) NOT NULL,
-comentario LONGTEXT
+comentario LONGTEXT,
+turno VARCHAR(255)
 );
 
 -- DROP DATABASE verificacion;

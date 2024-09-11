@@ -20,6 +20,7 @@
                   <th>Nombre completo</th>
                   <th>Trámite realizado</th>
                   <th>Comentario</th>
+                  <th>Turno</th>
                   <th>Habilitar turno</th>
                </tr>
            </thead>
@@ -29,7 +30,7 @@
         </table>
      </div>
 
-     <!-- Inclusón del cliente de Socket.io -->
+     <!-- Inclusión del cliente de Socket.io -->
      <script src="/socket.io/socket.io.js"></script>
      <script>
          const socket = io();
@@ -51,6 +52,22 @@
              }
          }
 
+         // Función para habilitar turno
+         // Función para habilitar turno en el frontend
+                function habilitarTurno(id) {                    
+                    fetch(`/habilitar-turno/${id}`, {
+                        method: 'POST',
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Turno habilitado');
+                        } else {
+                            alert('Error al habilitar el turno');
+                        }
+                    })
+                    .catch(error => console.error('Error al habilitar el turno:', error));
+                }
          // Función para agregar un registro a la tabla
          function addRowToTable(tramite) {
              registroCount++;
@@ -72,6 +89,8 @@
                                 <th>Nombre Completo</th>
                                 <th>Trámite</th>
                                 <th>Comentario</th>
+                                <th>Turno</th>
+                                <th>Habilitar turno</th>
                              </tr>
                          </thead>
                          <tbody id="tramitesTable${pageCount}">
@@ -90,6 +109,8 @@
                  <td>${tramite.fullname}</td>
                  <td>${tramite.tramite}</td>
                  <td>${tramite.comentario}</td>
+                 <td>${tramite.turno || 'No asignado'}</td>
+                 <td><button onclick="habilitarTurno(${tramite.id})">Habilitar turno</button></td>
              `;
              tramitesTable.appendChild(row);
          }

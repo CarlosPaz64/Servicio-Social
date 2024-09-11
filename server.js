@@ -8,6 +8,7 @@ const formularioEstatusRoute = require('./routes/formularioEstatus');
 const formularioBajaRoute = require('./routes/formularioBaja');
 const formularioRepoRoute = require('./routes/formularioReposicion');
 const formularioActRoute = require('./routes/formularioActualizacion');
+const habilitarTurnoRoute = require('./routes/habilitarTurno');
 const http = require('http');
 const socketIo = require('socket.io');
 
@@ -49,6 +50,10 @@ app.use('/formularioReposicion', formularioRepoWithIo);
 // Pasar `io` al enrutador de `formularioActualizacion`
 const formularioActWithIo = formularioActRoute(io);
 app.use('/formularioActualizacion', formularioActWithIo);
+
+// Pasar `io` al enrutador de `habilitarTurno`
+const habilitarTurnoWithIo = habilitarTurnoRoute(io);
+app.use('/', habilitarTurnoWithIo);
 
 // Rutas de las vistas de la aplicacion
 
@@ -92,7 +97,7 @@ io.on('connection', (socket) => {
   // Función para emitir los datos de la base de datos
   const emitData = async () => {
       try {
-          const [rows] = await pool.execute('SELECT num_folio, id_unico, curp, fullname, tramite, comentario FROM tramites_verificacion');
+          const [rows] = await pool.execute('SELECT id, num_folio, id_unico, curp, fullname, tramite, comentario, turno FROM tramites_verificacion');
           socket.emit('updateTable', rows);
       } catch (error) {
           console.error('Error al obtener los datos:', error);
@@ -109,6 +114,12 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
       console.log('Cliente desconectado');
   });
+});
+
+// Vista del turnero
+// Redirigir a index.html cuando se acceda a la raíz
+app.get('/turnero', (req, res) => {
+  res.sendFile(path.join(__dirname, 'turnero', 'index.html'));
 });
 
 // Iniciando el servidor

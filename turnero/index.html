@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turnero Digital</title>
+    <link rel="stylesheet" href="/stylesSocket.css">
+    <link rel="icon" href="logo.png" type="image/x-icon">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+        }
+
+        .left-panel {
+            width: 25%;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-right: 2px solid #ddd;
+        }
+
+        .left-panel h3 {
+            text-align: center;
+        }
+
+        .left-panel ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .left-panel ul li {
+            padding: 10px;
+            margin-bottom: 5px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .center-panel {
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f8f8;
+        }
+
+        .right-panel {
+            width: 25%;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-left: 2px solid #ddd;
+        }
+
+        .current-turn {
+            text-align: center;
+            font-size: 2em;
+            background-color: #fff;
+            padding: 20px;
+            margin: 10px;
+            border: 2px solid #ddd;
+        }
+
+        .bottom-panel {
+            height: 150px;
+            background-color: #e0e0e0;
+            text-align: center;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border-top: 2px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Panel izquierdo (turnos en orden) -->
+        <div class="left-panel">
+            <h3>Turnos en Orden</h3>
+            <ul id="turnosList">
+                <!-- Los turnos se insertarán aquí -->
+            </ul>
+        </div>
+
+        <!-- Panel central (video de YouTube) -->
+        <div class="center-panel">
+            <iframe id="ytplayer" type="text/html" width="640" height="360"
+                src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=http://example.com"
+                frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <!-- Panel derecho (turno actual) -->
+        <div class="right-panel">
+            <h3>Turno Actual</h3>
+            <div id="currentTurn" class="current-turn">Esperando...</div>
+        </div>
+    </div>
+
+    <!-- Panel inferior (para mostrar el turno actual en grande) -->
+    <div class="bottom-panel" id="turnoGrande">
+        Turno actual: Esperando...
+    </div>
+
+    <!-- Inclusión del cliente de Socket.io -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        // Pedido de permisos para las notificaciones
+        if (Notification.permission !== "granted") {
+            Notification.requestPermission();
+        }
+
+        // Función para mostrar notificación
+        function showTurnNotification(turno) {
+            if (Notification.permission === "granted") {
+                const notification = new Notification("Turno habilitado", {
+                    body: `Turno: ${turno}`,
+                    icon: '/logo.png'
+                });
+            }
+        }
+
+        // Función para agregar un turno a la lista de turnos en orden
+        function addTurnToList(turno) {
+            const turnosList = document.getElementById('turnosList');
+            const li = document.createElement('li');
+            li.textContent = turno;
+            turnosList.appendChild(li);
+        }
+
+        // Función para actualizar el turno actual
+        function updateCurrentTurn(turno) {
+            const currentTurn = document.getElementById('currentTurn');
+            const turnoGrande = document.getElementById('turnoGrande');
+            currentTurn.textContent = turno;
+            turnoGrande.textContent = `Turno actual: ${turno}`;
+        }
+
+        // Recibir un turno habilitado del servidor en tiempo real
+        socket.on('turnoHabilitado', (turno) => {
+            addTurnToList(turno); // Agregar a la lista
+            updateCurrentTurn(turno); // Mostrar como turno actual
+            showTurnNotification(turno); // Mostrar notificación
+            readTurnoAloud(turno); // Leer el turno en voz alta
+        });
+
+        // Función para leer el turno en voz alta usando SpeechSynthesis API
+        function readTurnoAloud(turno) {
+            const utterance = new SpeechSynthesisUtterance(`Turno número ${turno}`);
+            utterance.lang = 'es-ES';
+            speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>

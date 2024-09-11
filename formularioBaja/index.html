@@ -1,81 +1,113 @@
 <!DOCTYPE html>
-<!---Coding By CodingLab | www.codinglabweb.com--->
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario - Baja</title>
-    <!--<title>Registration Form in HTML CSS</title>-->
-    <!---Custom CSS File--->
-    <link rel="stylesheet" href="/stylesBaja.css" />
+    <link rel="stylesheet" href="/stylesRepos.css">
     <link rel="icon" href="/logo.png" type="image/png">
-  </head>
-  <body>
+</head>
+<body>
     <section class="container">
-      <header>Formulario - Baja</header>
-      <form action="/formularioBaja" class="form" method="post">
-        <div class="column">
-          <div class="input-box">
-            <label>Folio</label>
-            <input type="number" placeholder="Número de folio" name="num_folio" />
-          </div>
-          <div class="input-box">
-            <label>ID Único</label>
-            <input type="number" placeholder="ID" name="id_unico" />
-          </div>
-        </div>
+        <header>Formulario - Baja</header>
+        <form action="/formularioBaja" class="form" method="post">
+            <div class="column">
+                <div class="input-box">
+                    <label>Folio</label>
+                    <input type="number" placeholder="Número de folio" name="num_folio">
+                </div>
+                <div class="input-box">
+                    <label>ID Único</label>
+                    <input type="number" placeholder="ID" name="id_unico">
+                </div>
+            </div>
 
-        <div class="input-box">
-          <label>Clave Única de Registro Poblacional</label>
-          <input type="text" placeholder="CURP" name="curp" pattern=".{18}" title="El CURP debe tener exactamente 18 caracteres.">
-      </div>
-      
-      
+            <div class="input-box">
+                <label>Clave Única de Registro Poblacional</label>
+                <input type="text" placeholder="CURP" name="curp" pattern=".{18}" title="El CURP debe tener exactamente 18 caracteres.">
+            </div>
 
-        <div class="input-box">
-          <label>Nombre completo</label>
-          <input type="text" placeholder="Nombre completo" name="fullname"/>
-        </div>
+            <div class="input-box">
+                <label>Nombre completo</label>
+                <input type="text" placeholder="Nombre completo" name="fullname">
+            </div>
 
-        <div class="input-box">
-          <label for="tramite"></label>
-          <input type="hidden" name="estatus" id="tramite" value="Baja" />
-        </div>
+            <div class="input-box">
+                <label for="tramite"></label>
+                <input type="hidden" name="estatus" id="tramite" value="Trámite de baja">
+            </div>
 
-        <div class="input-box">
-          <label>Comentarios</label>
-          <textarea name="comentario" id="" cols="30" rows="10" style="resize: none;" placeholder="Notas"></textarea>
-        </div>
-      
+            <div class="input-box">
+                <label>Comentarios</label>
+                <textarea name="comentario" id="comentario" cols="30" rows="10" style="resize: none;" placeholder="Notas"></textarea>
+                <p id="wordCountMessage"></p> <!-- Mensaje de error o aviso de palabras -->
+            </div>
 
-        <button>Enviar</button>
-      </form>
+            <button type="submit" id="submitBtn">Enviar</button>
+        </form>
     </section>
+
     <script>
-      document.querySelector('form').addEventListener('submit', function(e) {
-          const inputs = document.querySelectorAll('input[type="text"], input[type="number"], textarea');
-          let isEmpty = true;
+        const comentarioInput = document.getElementById('comentario');
+        const wordCountMessage = document.getElementById('wordCountMessage');
+        const submitBtn = document.getElementById('submitBtn');
+        const maxWords = 50; // Número máximo de palabras permitidas
+        const maxWordLength = 20; // Longitud máxima permitida para una palabra
 
-          inputs.forEach(input => {
-            // Validando que no contenga caracteres prohibidos
-            if (/[<>]/.test(input.value)) {
-              e.preventDefault();  // Evita que el formulario se envíe
-              alert('Por favor, no ingrese caracteres como < o >.');
-              return;
+        // Función para contar palabras y ajustar el contenido si excede el límite
+        function checkWordCount() {
+            const words = comentarioInput.value.match(/\b\w+\b/g); // Solo contar palabras válidas (alfanuméricas)
+            const validWords = words ? words.filter(word => word.length <= maxWordLength) : []; // Filtrar palabras largas
+            const wordCount = validWords.length; // Contar las palabras válidas no vacías
+
+            if (wordCount > maxWords) {
+                wordCountMessage.textContent = `Máximo de ${maxWords} palabras alcanzado`;
+                submitBtn.disabled = true; // Deshabilitar el botón si se excede el límite
+                return false; // Devuelve false si excede el límite
+            } else if (words && words.some(word => word.length > maxWordLength)) {
+                wordCountMessage.textContent = `Cada palabra debe tener menos de ${maxWordLength} caracteres.`;
+                submitBtn.disabled = true;
+                return false;
+            } else {
+                wordCountMessage.textContent = `Palabras permitidas: ${maxWords - wordCount}`;
+                submitBtn.disabled = false; // Habilitar el botón si está dentro del límite
+                return true; // Devuelve true si está dentro del límite
             }
-          });
+        }
 
-          inputs.forEach(input => {
-              if (input.value.trim() !== "") {
-                  isEmpty = false;
-              }
-          });
+        // Evento input para limitar el texto mientras se escribe
+        comentarioInput.addEventListener('input', checkWordCount);
 
-          if (isEmpty) {
-              e.preventDefault();
-              alert('Por favor, complete al menos un campo antes de enviar el formulario.');
-          }
-      });
-  </script>
-  </body>
+        // Evento paste para interceptar el texto pegado y limitarlo
+        comentarioInput.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const pastedText = e.clipboardData.getData('text');
+            const currentText = comentarioInput.value;
+            const combinedText = currentText + ' ' + pastedText;
+            const words = combinedText.match(/\b\w+\b/g);
+            const validWords = words ? words.filter(word => word.length <= maxWordLength) : [];
+            const wordCount = validWords.length;
+
+            if (wordCount > maxWords) {
+                comentarioInput.value = validWords.slice(0, maxWords).join(' ');
+            } else {
+                comentarioInput.value = combinedText;
+            }
+            checkWordCount();
+        });
+
+        // Validar en el evento submit del formulario
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const valid = checkWordCount(); // Llama a la función de validación
+
+            if (!valid) {
+                e.preventDefault(); // Evitar que el formulario se envíe si se excede el límite
+                alert(`El campo de comentarios no puede exceder las ${maxWords} palabras, ni puede tener palabras que excedan los ${maxWordLength} caracteres.`);
+            }
+        });
+
+        // Deshabilitar el botón inicialmente si el campo de comentarios ya tiene más de 50 palabras o una palabra larga
+        checkWordCount();
+    </script>
+</body>
 </html>

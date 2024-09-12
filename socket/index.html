@@ -70,51 +70,30 @@
                 }
          // Función para agregar un registro a la tabla
          function addRowToTable(tramite) {
-             registroCount++;
+            registroCount++;
 
-             if (registroCount > 10 * pageCount) {
-                 pageCount++;
-                 registroCount = 1;
-                 // Crea una nueva tabla o página
-                 const newPage = document.createElement('div');
-                 newPage.classList.add('table-users');
-                 newPage.innerHTML = `
-                     <div class="header">Trámites Verificación - Página ${pageCount}</div>
-                     <table cellspacing="0">
-                         <thead>
-                             <tr>
-                                <th>Folio</th>
-                                <th>ID Único</th>
-                                <th>CURP</th>
-                                <th>Nombre Completo</th>
-                                <th>Trámite</th>
-                                <th>Comentario</th>
-                                <th>Turno</th>
-                                <th>Habilitar turno</th>
-                             </tr>
-                         </thead>
-                         <tbody id="tramitesTable${pageCount}">
-                         </tbody>
-                     </table>
-                 `;
-                 document.body.appendChild(newPage);
-             }
+            // Obtener la tabla actual (sin crear nuevas páginas)
+            const tramitesTable = document.getElementById('tramitesTable');
 
-             const tramitesTable = document.getElementById(`tramitesTable${pageCount}`) || document.getElementById('tramitesTable');
-             const row = document.createElement('tr');
-             row.innerHTML = `
-                 <td>${tramite.num_folio}</td>
-                 <td>${tramite.id_unico}</td>
-                 <td>${tramite.curp}</td>
-                 <td>${tramite.fullname}</td>
-                 <td>${tramite.tramite}</td>
-                 <td>${tramite.comentario}</td>
-                 <td>${tramite.turno || 'No asignado'}</td>
-                 <td><button onclick="habilitarTurno(${tramite.id})">Habilitar turno</button></td>
-             `;
-             tramitesTable.appendChild(row);
-         }
+            // Crear una nueva fila para el registro
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${tramite.num_folio}</td>
+                <td>${tramite.id_unico}</td>
+                <td>${tramite.curp}</td>
+                <td>${tramite.fullname}</td>
+                <td>${tramite.tramite}</td>
+                <td>${tramite.comentario}</td>
+                <td>${tramite.turno || 'No asignado'}</td>
+                <td><button onclick="habilitarTurno(${tramite.id})">Habilitar turno</button></td>
+            `;
+            tramitesTable.appendChild(row);
 
+            // Si la tabla tiene más de 10 registros, elimina el más antiguo
+            if (tramitesTable.rows.length > 10) {
+                tramitesTable.deleteRow(0); // Elimina la primera fila (más antigua)
+            }
+        }
          // Cargar todos los registros actuales al iniciar
          fetch('/formularioEstatus/api/tramites')
              .then(response => response.json())

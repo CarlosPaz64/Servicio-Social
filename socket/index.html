@@ -31,67 +31,65 @@
      <!-- Inclusón del cliente de Socket.io -->
      <script src="/socket.io/socket.io.js"></script>
      <script>
-         const socket = io();
-         let registroCount = 0;
-         let pageCount = 1;
+    const socket = io();
+    let registroCount = 0;
+    let pageCount = 1;
 
-         // Pedido de permisos para las notificaciones
-         if (Notification.permission !== "granted") {
-             Notification.requestPermission();
-         }
+    // Pedido de permisos para las notificaciones
+    if (Notification.permission !== "granted") {
+        Notification.requestPermission();
+    }
 
-         // Función para mostrar notificación
-         function showNotification(tramite) {
-             if (Notification.permission === "granted") {
-                 const notification = new Notification("¡Se ha subido un nuevo registro!", {
-                     body: `Folio: ${tramite.num_folio}, Nombre: ${tramite.fullname}`,
-                     icon: '/logo.png'
-                 });
-             }
-         }
-
-        
-         // Función para actualizar la tabla con un nuevo registro
-        function addRowToTable(tramite) {
-            const tramitesTable = document.getElementById('tramitesTable');
-
-            // Crea una nueva fila
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${tramite.num_folio}</td>
-                <td>${tramite.id_unico}</td>
-                <td>${tramite.curp}</td>
-                <td>${tramite.fullname}</td>
-                <td>${tramite.tramite}</td>
-                <td>${tramite.comentario}</td>
-            `;
-            tramitesTable.appendChild(row);
-
-            // Si la tabla tiene más de 10 registros, elimina el más antiguo
-            if (tramitesTable.rows.length > 10) {
-                tramitesTable.deleteRow(1); // Borra la primera fila
-                while (tramitesTable.rows.length > 0) {
-             tramitesTable.deleteRow(0);
-             }
-
-            }
+    // Función para mostrar notificación
+    function showNotification(tramite) {
+        if (Notification.permission === "granted") {
+            const notification = new Notification("¡Se ha subido un nuevo registro!", {
+                body: `Folio: ${tramite.num_folio}, Nombre: ${tramite.fullname}`,
+                icon: '/logo.png'
+            });
         }
+    }
 
-         // Cargar todos los registros actuales al iniciar
-         fetch('/formularioEstatus/api/tramites')
-             .then(response => response.json())
-             .then(data => {
-                 data.forEach(tramite => {
-                     addRowToTable(tramite);
-                 });
-             })
-             .catch(error => console.error('Error al cargar los trámites:', error));
+   // Función para actualizar la tabla con un nuevo registro
+function addRowToTable(tramite) {
+    const tramitesTableBody = document.getElementById('tramitesTable');
 
-         // Recibir un nuevo registro del servidor
-         socket.on('newRecord', (tramite) => {
-             addRowToTable(tramite);
-             showNotification(tramite);
-         });
-     </script>
+    // Crea una nueva fila
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td>${tramite.num_folio}</td>
+        <td>${tramite.id_unico}</td>
+        <td>${tramite.curp}</td>
+        <td>${tramite.fullname}</td>
+        <td>${tramite.tramite}</td>
+        <td>${tramite.comentario}</td>
+    `;
+    tramitesTableBody.appendChild(row);
+
+    // Si el cuerpo de la tabla tiene más de 10 registros, elimina el más antiguo
+    if (tramitesTableBody.rows.length > 10) {
+        tramitesTableBody.deleteRow(0); // Elimina la primera fila (más antigua)
+    }
+}
+
+
+    // Cargar todos los registros actuales al iniciar
+    fetch('/formularioEstatus/api/tramites')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(tramite => {
+                addRowToTable(tramite);
+            });
+        })
+        .catch(error => console.error('Error al cargar los trámites:', error));
+
+    // Recibir un nuevo registro del servidor
+    socket.on('newRecord', (tramite) => {
+        addRowToTable(tramite);
+        showNotification(tramite);
+    });
+</script>
+
+
 </body>
 </html>

@@ -28,7 +28,7 @@
         .left-panel {
             color: #fff;
             width: 25%;
-            background-color: rgb(157, 36, 73);;
+            background-color: rgb(157, 36, 73);
             padding: 10px;
             border-right: 2px solid #ddd;
         }
@@ -62,16 +62,15 @@
             background-color: rgb(157, 36, 73);
         }
 
-        
         .right-panel h3 {
             text-align: center;
             font-size: 27px;
         }
 
-        .right-panel  {
+        .right-panel {
             color: #fff;
             width: 25%;
-            background-color: rgb(157, 36, 73);;
+            background-color: rgb(157, 36, 73);
             padding: 10px;
             border-left: 2px solid #ddd;
         }
@@ -113,17 +112,17 @@
             <!-- Turno en grande -->
             <div class="turno-grande" id="turnoGrande">
                 Turno actual: Esperando...
-            </div>
+            </div> 
 
-            <iframe id="ytplayer" type="text/html" width="740" height="460"
-                src="https://www.youtube.com/embed/mPoZEncPvn4?si=luKK2couH4WnlAQU" 
+            <iframe id="ytplayer" type="text/html" width="640" height="360"
+                src="https://www.youtube.com/embed/mPoZEncPvn4?autoplay=1&loop=1&playlist=mPoZEncPvn4" 
                 frameborder="0" allowfullscreen></iframe>
-        </div>
+        </div> 
 
-        <!-- Panel derecho (turno actual) -->
+        <!-- Panel derecho (turno anterior) -->
         <div class="right-panel">
             <h3>Turno Anterior</h3>
-            <div id="currentTurn" class="current-turn">Esperando...</div>
+            <div id="previousTurn" class="current-turn">Esperando...</div>
         </div>
     </div>
 
@@ -136,6 +135,10 @@
         if (Notification.permission !== "granted") {
             Notification.requestPermission();
         }
+
+        // Variables para manejar los turnos
+        let currentTurn = null;
+        let previousTurn = null;
 
         // Función para mostrar notificación
         function showTurnNotification(turno) {
@@ -157,26 +160,31 @@
 
         // Función para actualizar el turno actual
         function updateCurrentTurn(turno) {
-            const currentTurn = document.getElementById('currentTurn');
             const turnoGrande = document.getElementById('turnoGrande');
-            currentTurn.textContent = turno;
-            turnoGrande.textContent = `Turno actual: ${turno}`;
+            const previousTurnDiv = document.getElementById('previousTurn');
+            
+            if (currentTurn !== null) {
+                previousTurn = currentTurn; // Actualizamos el turno anterior
+                previousTurnDiv.textContent = ` ${previousTurn}`; // Mostramos el turno anterior
+            }
+            currentTurn = turno; // Actualizamos el turno actual
+            turnoGrande.textContent = `Turno actual: ${turno}`; // Mostramos el turno actual
         }
 
         // Recibir un turno habilitado del servidor en tiempo real
         socket.on('turnoHabilitado', (turno) => {
             addTurnToList(turno); // Agregar a la lista
-            updateCurrentTurn(turno); // Mostr  ar como turno actual
+            updateCurrentTurn(turno); // Actualizar turnos
             showTurnNotification(turno); // Mostrar notificación
             readTurnoAloud(turno); // Leer el turno en voz alta
         });
 
         // Función para leer el turno en voz alta usando SpeechSynthesis API
         function readTurnoAloud(turno) {
-               // Esperar a que la API esté lista
-                if (speechSynthesis.speaking || speechSynthesis.pending) {
-                    speechSynthesis.cancel();
-                }
+            // Esperar a que la API esté lista
+            if (speechSynthesis.speaking || speechSynthesis.pending) {
+                speechSynthesis.cancel();
+            }
             const utterance = new SpeechSynthesisUtterance(`Turno número ${turno}`);
             utterance.lang = 'es-ES';
             speechSynthesis.speak(utterance);

@@ -12,6 +12,7 @@
             flex-direction: column;
             height: 100vh;
         }
+
         #ytplayer{
             border: 5px solid #ffffff; /* Cambia el color del borde */
             border-radius: 10px; /* Bordes redondeados */
@@ -40,6 +41,7 @@
         .left-panel ul {
             list-style: none;
             padding: 0;
+            text-align: center;
         }
 
         .left-panel ul li {
@@ -86,20 +88,20 @@
         .turno-grande {
             width: 100%;
             background-color: rgb(157, 36, 73);
-            text-align: center;
+            text-align: center; 
             font-size: 5em;
             font-weight: bold;
             margin-top: 20px;
             padding: 40px;
-            border-top: 2px solid #ddd;
+            border-top: 2px solid #ddd; 
         }
-    </style>
+    </style> 
 </head>
 <body>
 
     <div class="main-container">
         <!-- Panel izquierdo (turnos en orden) -->
-        <div class="left-panel">
+        <div class="left-panel">  
             <h3>Turnos en Orden</h3>
             <ul id="turnosList">
                 <!-- Los turnos se insertarán aquí -->
@@ -113,7 +115,7 @@
                 Turno actual: Esperando...
             </div>
 
-            <iframe id="ytplayer" type="text/html" width="640" height="360"
+            <iframe id="ytplayer" type="text/html" width="740" height="460"
                 src="https://www.youtube.com/embed/mPoZEncPvn4?si=luKK2couH4WnlAQU" 
                 frameborder="0" allowfullscreen></iframe>
         </div>
@@ -164,7 +166,7 @@
         // Recibir un turno habilitado del servidor en tiempo real
         socket.on('turnoHabilitado', (turno) => {
             addTurnToList(turno); // Agregar a la lista
-            updateCurrentTurn(turno); // Mostrar como turno actual
+            updateCurrentTurn(turno); // Mostr  ar como turno actual
             showTurnNotification(turno); // Mostrar notificación
             readTurnoAloud(turno); // Leer el turno en voz alta
         });

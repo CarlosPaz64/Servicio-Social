@@ -69,6 +69,21 @@ body {
 .input-box input:focus {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
 }
+.form :where(.input-box textarea,) {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  outline: none;
+  font-size: 1rem;
+  color: #707070;
+  margin-top: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0 15px;
+}
+.input-box textarea:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
 .form .column {
   display: flex;
   column-gap: 15px;
@@ -120,12 +135,11 @@ body {
   border: 1px solid transparent;;
   cursor: pointer;
   transition: all 0.2s ease;
-  color: #030728;
+  background: rgb(157, 36, 73);
 }
 .form button:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid #2b2929;
-  color: #080808;
+  background: rgb(82, 13, 33);
+}
 }
 /*Responsive*/
 @media screen and (max-width: 500px) {

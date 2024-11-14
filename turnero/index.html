@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turnero Digital</title>
+    <link rel="stylesheet" href="/stylesSocket.css">
+    <link rel="icon" href="logo.png" type="image/x-icon">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        #ytplayer {
+            border: 5px solid #ffffff;
+            /* Cambia el color del borde */
+            border-radius: 10px;
+            /* Bordes redondeados */
+            margin: 20px auto;
+            /* Centra el video */
+            display: block;
+            /* Para que el margen funcione */
+        }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+        }
+
+        .left-panel {
+            color: #fff;
+            width: 25%;
+            background-color: rgb(157, 36, 73);
+            padding: 10px;
+            border-right: 2px solid #ddd;
+        }
+
+        .left-panel h3 {
+            text-align: center;
+            font-size: 27px;
+        }
+
+        .left-panel ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        .left-panel ul li {
+            color: #fff;
+            padding: 10px;
+            margin-bottom: 5px;
+            background-color: rgb(206, 86, 122);
+            border: 1px solid #ddd;
+        }
+
+        .center-panel {
+            color: #fff;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(157, 36, 73);
+        }
+
+        .right-panel h3 {
+            text-align: center;
+            font-size: 27px;
+        }
+
+        .right-panel {
+            color: #fff;
+            width: 25%;
+            background-color: rgb(157, 36, 73);
+            padding: 10px;
+            border-left: 2px solid #ddd;
+        }
+
+        .current-turn {
+            text-align: center;
+            font-size: 2em;
+            background-color: rgb(206, 86, 122);
+            padding: 20px;
+            margin: 10px;
+            border: 2px solid #ddd;
+        }
+
+        .turno-grande {
+            width: 100%;
+            background-color: rgb(157, 36, 73);
+            text-align: center;
+            font-size: 5em;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 40px;
+            border-top: 2px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-container">
+        <!-- Panel izquierdo (turnos en orden) -->
+        <div class="left-panel" id="leftPanel">
+            <h3>Turnos en Orden</h3>
+            <ul id="turnosList">
+                <!-- Los turnos se insertarán aquí -->
+            </ul>
+        </div>
+
+        <!-- Panel central (video de YouTube y turno grande) -->
+        <div class="center-panel">
+            <!-- Turno en grande -->
+            <div class="turno-grande" id="turnoGrande">
+                Turno actual: Esperando...
+            </div>
+
+            <iframe id="ytplayer" type="text/html" width="640" height="360"
+                src="https://www.youtube.com/embed/mPoZEncPvn4?autoplay=1&loop=1&playlist=mPoZEncPvn4" frameborder="0"
+                allowfullscreen></iframe>
+        </div>
+
+        <!-- Panel derecho (turno anterior) -->
+        <div class="right-panel">
+            <h3>Turno Anterior</h3>
+            <div id="previousTurn" class="current-turn">Esperando...</div>
+        </div>
+    </div>
+
+    <!-- Inclusión del cliente de Socket.io -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+    
+        // Pedido de permisos para las notificaciones
+        if (Notification.permission !== "granted") {
+            Notification.requestPermission();
+        }
+    
+        // Variables para manejar los turnos
+        let currentTurn = null;
+        let previousTurn = null;
+    
+        let voices = []; // Aquí almacenaremos las voces disponibles
+        let selectedVoice = null; // Aquí se almacenará la voz seleccionada
+    
+        // Función para cargar las voces disponibles
+        function loadVoices() {
+            voices = speechSynthesis.getVoices();
+            if (voices.length > 0) {
+                selectedVoice = voices[0]; // Seleccionamos la primera voz por defecto
+            }
+        }
+    
+        // Función para leer el turno en voz alta usando SpeechSynthesis API
+        function readTurnoAloud(turno) {
+            // Esperar a que la API esté lista
+            if (speechSynthesis.speaking || speechSynthesis.pending) {
+                speechSynthesis.cancel();
+            }
+            const utterance = new SpeechSynthesisUtterance(`Turno número ${turno}`);
+            utterance.lang = 'es-ES'; // Idioma en español
+            utterance.voice = selectedVoice; // Usar la voz seleccionada
+            utterance.pitch = 0.1;
+            utterance.rate = 0.7;
+            speechSynthesis.speak(utterance);
+
+        
+        }
+    
+        // Función para mostrar notificación
+        function showTurnNotification(turno) {
+            if (Notification.permission === "granted") {
+                const notification = new Notification("Turno habilitado", {
+                    body: `Turno: ${turno}`,
+                    icon: '/logo.png'
+                });
+            }
+        }
+    
+        // Función para agregar un turno a la lista de turnos en orden
+        function addTurnToList(turno) {
+            const turnosList = document.getElementById('turnosList');
+    
+            // Limitar el número de turnos a 14
+            if (turnosList.children.length >= 13) {
+                // Limpiar la lista y agregar el turno 14 en el nuevo panel
+                clearTurnList();
+            }
+    
+            // Agregar el turno actual (incluyendo el turno 14 que será agregado después de limpiar)
+            const li = document.createElement('li');
+            li.textContent = turno;
+            turnosList.appendChild(li);
+        }
+    
+        // Limpiar la lista de turnos
+        function clearTurnList() {
+            const turnosList = document.getElementById('turnosList');
+            turnosList.innerHTML = '';
+        }
+    
+        // Añadir un nuevo panel de "Turnos en Orden"
+        function addNewLeftPanel() {
+            const mainContainer = document.querySelector('.main-container');
+            const newLeftPanel = document.createElement('div');
+            newLeftPanel.classList.add('left-panel');
+            newLeftPanel.innerHTML = `
+                <h3>Turnos en Orden</h3>
+                <ul id="turnosList"></ul>
+            `;
+            mainContainer.insertBefore(newLeftPanel, mainContainer.children[0]); // Inserta antes del panel central
+        }
+    
+        // Función para actualizar el turno actual
+        function updateCurrentTurn(turno) {
+            const turnoGrande = document.getElementById('turnoGrande');
+            const previousTurnDiv = document.getElementById('previousTurn');
+    
+            if (currentTurn !== null) {
+                previousTurn = currentTurn; // Actualizamos el turno anterior
+                previousTurnDiv.textContent = ` ${previousTurn}`; // Mostramos el turno anterior
+            }
+            currentTurn = turno; // Actualizamos el turno actual
+            turnoGrande.textContent = `Turno actual: ${turno}`; // Mostramos el turno actual
+        }
+    
+        // Recibir un turno habilitado del servidor en tiempo real
+        socket.on('turnoHabilitado', (turno) => {
+            addTurnToList(turno); // Agregar a la lista
+            updateCurrentTurn(turno); // Actualizar turnos
+            showTurnNotification(turno); // Mostrar notificación
+            readTurnoAloud(turno); // Leer el turno en voz alta
+        });
+    
+        // Cargar las voces disponibles cuando la página esté lista
+        
+        
+    </script>
+    
+</body>
+
+</html>

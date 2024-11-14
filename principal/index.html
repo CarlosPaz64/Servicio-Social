@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Secretaría de Bienestar | Gobierno | Yucatán</title>
   <!-- Linking SwiperJS CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
@@ -11,6 +12,9 @@
   <link rel="icon" href="logo.png" type="image/x-icon">
 </head>
 <body>
+<!--  <header class="header">
+    <nav><img src="imagen.png" alt="User Image" class="user-image"></nav>
+  </header>-->
   <div class="container swiper">
     <div class="slider-wrapper">
       <button class="message-button" id="coordinador">Soy un coordinador</button>
@@ -41,6 +45,7 @@
           <img src="logobienestar.jpg" alt="User Image" class="user-image">
           <h2 class="user-name">Actualización de datos</h2>
           <p class="user-profession"></p>
+
           <button class="message-button" id="Actualizacion">Verificar</button>
         </div>
       </div>
@@ -92,7 +97,6 @@
 document.getElementById("Estatus").onclick = function(){
     window.location.href = ("/formularioEstatus/index.html")
 }
-
 // Selecciona el boton por el ID y le da la función de mandarlo a otra página
 document.getElementById("Baja").onclick = function(){
     window.location.href = ("/formularioBaja/index.html")
@@ -111,6 +115,7 @@ document.getElementById("Actualizacion").onclick = function(){
 // Selecciona el boton por el ID y le da la función de mandarlo a otra página
 document.getElementById("coordinador").onclick = function(){
     window.location.href = ("/socket")
+
 }
   </script>
 </body>

@@ -26,12 +26,23 @@ app.use(cookieParser());
 // Configuración de DotEnv
 dotenv.config();
 
+// Configuración del middleware body-parser
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+// Configuración de cookie-parser
+app.use(cookieParser());
+
+// Configuración de DotEnv
+dotenv.config();
+
 // Configuración del puerto
 const PORT = 3000;
 const HOST =  process.env.HOST;
 
 // Sirviendo archivos estáticos desde la carpeta "public"
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Rutas del socket.io
 
@@ -114,6 +125,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
       console.log('Cliente desconectado');
   });
+
 });
 
 // Vista del turnero
@@ -121,6 +133,7 @@ io.on('connection', (socket) => {
 app.get('/turnero', (req, res) => {
   res.sendFile(path.join(__dirname, 'turnero', 'index.html'));
 });
+
 
 // Iniciando el servidor
 server.listen(PORT, HOST, () => {

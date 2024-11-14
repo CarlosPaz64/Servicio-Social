@@ -136,16 +136,43 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
-
+    
         // Pedido de permisos para las notificaciones
         if (Notification.permission !== "granted") {
             Notification.requestPermission();
         }
-
+    
         // Variables para manejar los turnos
         let currentTurn = null;
         let previousTurn = null;
+    
+        let voices = []; // Aquí almacenaremos las voces disponibles
+        let selectedVoice = null; // Aquí se almacenará la voz seleccionada
+    
+        // Función para cargar las voces disponibles
+        function loadVoices() {
+            voices = speechSynthesis.getVoices();
+            if (voices.length > 0) {
+                selectedVoice = voices[0]; // Seleccionamos la primera voz por defecto
+            }
+        }
+    
+        // Función para leer el turno en voz alta usando SpeechSynthesis API
+        function readTurnoAloud(turno) {
+            // Esperar a que la API esté lista
+            if (speechSynthesis.speaking || speechSynthesis.pending) {
+                speechSynthesis.cancel();
+            }
+            const utterance = new SpeechSynthesisUtterance(`Turno número ${turno}`);
+            utterance.lang = 'es-ES'; // Idioma en español
+            utterance.voice = selectedVoice; // Usar la voz seleccionada
+            utterance.pitch = 0.1;
+            utterance.rate = 0.7;
+            speechSynthesis.speak(utterance);
 
+        
+        }
+    
         // Función para mostrar notificación
         function showTurnNotification(turno) {
             if (Notification.permission === "granted") {
@@ -155,30 +182,29 @@
                 });
             }
         }
-
+    
         // Función para agregar un turno a la lista de turnos en orden
         function addTurnToList(turno) {
             const turnosList = document.getElementById('turnosList');
-
+    
             // Limitar el número de turnos a 14
             if (turnosList.children.length >= 13) {
                 // Limpiar la lista y agregar el turno 14 en el nuevo panel
                 clearTurnList();
             }
-
+    
             // Agregar el turno actual (incluyendo el turno 14 que será agregado después de limpiar)
             const li = document.createElement('li');
             li.textContent = turno;
             turnosList.appendChild(li);
         }
-
-
+    
         // Limpiar la lista de turnos
         function clearTurnList() {
             const turnosList = document.getElementById('turnosList');
             turnosList.innerHTML = '';
         }
-
+    
         // Añadir un nuevo panel de "Turnos en Orden"
         function addNewLeftPanel() {
             const mainContainer = document.querySelector('.main-container');
@@ -190,12 +216,12 @@
             `;
             mainContainer.insertBefore(newLeftPanel, mainContainer.children[0]); // Inserta antes del panel central
         }
-
+    
         // Función para actualizar el turno actual
         function updateCurrentTurn(turno) {
             const turnoGrande = document.getElementById('turnoGrande');
             const previousTurnDiv = document.getElementById('previousTurn');
-
+    
             if (currentTurn !== null) {
                 previousTurn = currentTurn; // Actualizamos el turno anterior
                 previousTurnDiv.textContent = ` ${previousTurn}`; // Mostramos el turno anterior
@@ -203,7 +229,7 @@
             currentTurn = turno; // Actualizamos el turno actual
             turnoGrande.textContent = `Turno actual: ${turno}`; // Mostramos el turno actual
         }
-
+    
         // Recibir un turno habilitado del servidor en tiempo real
         socket.on('turnoHabilitado', (turno) => {
             addTurnToList(turno); // Agregar a la lista
@@ -211,18 +237,12 @@
             showTurnNotification(turno); // Mostrar notificación
             readTurnoAloud(turno); // Leer el turno en voz alta
         });
-
-        // Función para leer el turno en voz alta usando SpeechSynthesis API
-        function readTurnoAloud(turno) {
-            // Esperar a que la API esté lista
-            if (speechSynthesis.speaking || speechSynthesis.pending) {
-                speechSynthesis.cancel();
-            }
-            const utterance = new SpeechSynthesisUtterance(`Turno número ${turno}`);
-            utterance.lang = 'es-ES';
-            speechSynthesis.speak(utterance);
-        }
+    
+        // Cargar las voces disponibles cuando la página esté lista
+        
+        
     </script>
+    
 </body>
 
 </html>

@@ -1,175 +1,122 @@
 <!DOCTYPE html>
-<!-- Se define el tipo de documento como HTML5 -->
-
+<!-- Coding By CodingNepal - www.codingnepalweb.com -->
 <html lang="en">
-<!-- El atributo lang="en" indica que el contenido está en inglés -->
-
 <head>
   <meta charset="UTF-8">
-  <!-- Define la codificación de caracteres como UTF-8, que incluye la mayoría de los caracteres de todos los idiomas -->
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Configura el viewport para que la página sea responsiva, adaptándose al tamaño de la pantalla del dispositivo -->
 
   <title>Secretaría de Bienestar | Gobierno | Yucatán</title>
-  <!-- Establece el título de la página que se mostrará en la pestaña del navegador -->
-
-  <!-- Se enlazan las hojas de estilo (CSS) -->
+  <!-- Linking SwiperJS CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-  <!-- Este enlace importa el CSS de SwiperJS, una librería para crear sliders (deslizadores de contenido) -->
-  
   <link rel="stylesheet" href="/stylesPrincipal.css">
-  <!-- Enlace a una hoja de estilo personalizada (stylesPrincipal.css), que probablemente contiene estilos específicos de la página -->
-
   <link rel="icon" href="logo.png" type="image/x-icon">
-  <!-- Define el icono que se muestra en la pestaña del navegador (favicon) -->
 </head>
-
 <body>
-<!-- El cuerpo de la página web comienza aquí -->
-
-<!-- Se ha comentado un bloque de código que define una barra de navegación con un logo de usuario -->
-<!--
-  <header class="header">
+<!--  <header class="header">
     <nav><img src="imagen.png" alt="User Image" class="user-image"></nav>
-  </header>
--->
+  </header>-->
+  <div class="container swiper">
+    <div class="slider-wrapper">
+      <button class="message-button" id="coordinador">Soy un coordinador</button>
+      <br><br><br><br><br>
+      <div class="card-list swiper-wrapper">
+        <div class="card-item swiper-slide">
+          <img src="logobienestar.jpg" alt="User Image" class="user-image" width="200" height="200">
+          <h2 class="user-name">Estatus - Tarjeta</h2>
+          <p class="user-profession"></p>
+          <button class="message-button" id="Estatus">Verificar</button>
+        </div>
 
-<div class="container swiper">
-  <!-- Contenedor principal para el swiper (deslizador de contenido) -->
+        <div class="card-item swiper-slide">
+          <img src="logobienestar.jpg" alt="User Image" class="user-image">
+          <h2 class="user-name">Baja</h2>
+          <p class="user-profession"></p>
+          <button class="message-button" id="Baja">Verificar</button>
+        </div>
 
-  <div class="slider-wrapper">
-    <!-- Contenedor para el swiper donde se muestran las tarjetas de opciones -->
-    
-    <button class="message-button" id="coordinador">Soy un coordinador</button>
-    <!-- Botón que, cuando se hace clic, redirige a una página específica. El id "coordinador" es utilizado más tarde en el script para redirigir -->
+        <div class="card-item swiper-slide">
+          <img src="logobienestar.jpg" alt="User Image" class="user-image">
+          <h2 class="user-name">Reposición</h2>
+          <p class="user-profession"></p>
+          <button class="message-button" id="Reposicion">Verificar</button>
+        </div>
 
-    <br><br><br><br><br>
-    <!-- Espaciado entre el botón y las tarjetas -->
-    
-    <div class="card-list swiper-wrapper">
-      <!-- Lista de tarjetas que será el contenido deslizante dentro del swiper -->
+        <div class="card-item swiper-slide">
+          <img src="logobienestar.jpg" alt="User Image" class="user-image">
+          <h2 class="user-name">Actualización de datos</h2>
+          <p class="user-profession"></p>
 
-      <div class="card-item swiper-slide">
-        <!-- Cada tarjeta es un item dentro del slider -->
-
-        <img src="logobienestar.jpg" alt="User Image" class="user-image" width="200" height="200">
-        <!-- Imagen de la tarjeta, en este caso un logo. Atributos de tamaño definidos -->
-
-        <h2 class="user-name">Estatus - Tarjeta</h2>
-        <!-- Título de la tarjeta, en este caso "Estatus - Tarjeta" -->
-
-        <p class="user-profession"></p>
-        <!-- Se deja vacío, probablemente para futuras actualizaciones -->
-
-        <button class="message-button" id="Estatus">Verificar</button>
-        <!-- Botón de la tarjeta con id "Estatus", que será usado para redirigir a una página cuando se hace clic -->
+          <button class="message-button" id="Actualizacion">Verificar</button>
+        </div>
       </div>
 
-      <div class="card-item swiper-slide">
-        <!-- Otra tarjeta con contenido similar -->
-        <img src="logobienestar.jpg" alt="User Image" class="user-image">
-        <h2 class="user-name">Baja</h2>
-        <button class="message-button" id="Baja">Verificar</button>
-      </div>
-
-      <div class="card-item swiper-slide">
-        <!-- Otra tarjeta -->
-        <img src="logobienestar.jpg" alt="User Image" class="user-image">
-        <h2 class="user-name">Reposición</h2>
-        <button class="message-button" id="Reposicion">Verificar</button>
-      </div>
-
-      <div class="card-item swiper-slide">
-        <!-- Otra tarjeta -->
-        <img src="logobienestar.jpg" alt="User Image" class="user-image">
-        <h2 class="user-name">Actualización de datos</h2>
-        <button class="message-button" id="Actualizacion">Verificar</button>
-      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-slide-button swiper-button-prev"></div>
+      <div class="swiper-slide-button swiper-button-next"></div>
     </div>
-
-    <!-- Paginación de SwiperJS -->
-    <div class="swiper-pagination"></div>
-    <!-- Muestra los puntos de navegación de las diapositivas -->
-
-    <div class="swiper-slide-button swiper-button-prev"></div>
-    <!-- Botón de navegación para ir a la diapositiva anterior -->
-
-    <div class="swiper-slide-button swiper-button-next"></div>
-    <!-- Botón de navegación para ir a la diapositiva siguiente -->
   </div>
-</div>
 
-<!-- Se enlazan los scripts de SwiperJS y un script personalizado -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<!-- Se incluye el archivo JavaScript de SwiperJS -->
+  <!-- Linking SwiperJS script -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-<script>
-  const swiper = new Swiper('.slider-wrapper', {
-    loop: true,
-    grabCursor: true,
-    spaceBetween: 30,
+  <!-- Linking custom script -->
+  <script>
+    const swiper = new Swiper('.slider-wrapper', {
+  loop: true,
+  grabCursor: true,
+  spaceBetween: 30,
 
-    // Configuración de la paginación (los puntos de navegación)
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-      dynamicBullets: true
+  // Pagination bullets
+  pagination: {
+    el: '.swiper-pagination',
+    clickable: true,
+    dynamicBullets: true
+  },
+
+  // Navigation arrows
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+
+  // Responsive breakpoints
+  breakpoints: {
+    0: {
+      slidesPerView: 1
     },
-
-    // Configuración de las flechas de navegación
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
+    768: {
+      slidesPerView: 2
     },
-
-    // Configuración para la cantidad de slides mostrados según el tamaño de la pantalla
-    breakpoints: {
-      0: {
-        slidesPerView: 1
-      },
-      768: {
-        slidesPerView: 2
-      },
-      1024: {
-        slidesPerView: 3
-      }
+    1024: {
+      slidesPerView: 3
     }
-  });
-  // Configuración del swiper, que incluye:
-  // 1. Activar el bucle infinito
-  // 2. Habilitar el cursor de agarre (para un control de deslizamiento más interactivo)
-  // 3. Definir el espacio entre las tarjetas
-  // 4. Hacer que los botones de paginación sean dinámicos y clickeables
-  // 5. Definir el comportamiento de las flechas de navegación
-  // 6. Establecer las vistas de las diapositivas en función del tamaño de la pantalla (responsivo)
-
-  // Funciones para redirigir a otras páginas cuando los botones son clickeados
-  document.getElementById("Estatus").onclick = function(){
-      window.location.href = ("/formularioEstatus/index.html")
   }
-  // Cuando se hace clic en el botón con id "Estatus", redirige a /formularioEstatus/index.html
+});
 
-  document.getElementById("Baja").onclick = function(){
-      window.location.href = ("/formularioBaja/index.html")
-  }
-  // Similar, redirige a /formularioBaja/index.html al hacer clic en el botón con id "Baja"
+// Selecciona el boton por el ID y le da la función de mandarlo a otra página
+document.getElementById("Estatus").onclick = function(){
+    window.location.href = ("/formularioEstatus/index.html")
+}
+// Selecciona el boton por el ID y le da la función de mandarlo a otra página
+document.getElementById("Baja").onclick = function(){
+    window.location.href = ("/formularioBaja/index.html")
+}
 
-  document.getElementById("Reposicion").onclick = function(){
-      window.location.href = ("/formularioReposicion/index.html")
-  }
-  // Similar, redirige a /formularioReposicion/index.html al hacer clic en el botón con id "Reposicion"
+// Selecciona el boton por el ID y le da la función de mandarlo a otra página
+document.getElementById("Reposicion").onclick = function(){
+    window.location.href = ("/formularioReposicion/index.html")
+}
 
-  document.getElementById("Actualizacion").onclick = function(){
-      window.location.href = ("/formularioActualizacion/index.html")
-  }
-  // Similar, redirige a /formularioActualizacion/index.html al hacer clic en el botón con id "Actualizacion"
+// Selecciona el boton por el ID y le da la función de mandarlo a otra página
+document.getElementById("Actualizacion").onclick = function(){
+    window.location.href = ("/formularioActualizacion/index.html")
+}
 
-  document.getElementById("coordinador").onclick = function(){
-      window.location.href = ("/socket")
-  }
-  // Cuando se hace clic en el botón con id "coordinador", redirige a /socket
-</script>
+// Selecciona el boton por el ID y le da la función de mandarlo a otra página
+document.getElementById("coordinador").onclick = function(){
+    window.location.href = ("/socket")
+
+}
+  </script>
 </body>
-
 </html>

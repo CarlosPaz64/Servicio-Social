@@ -53,13 +53,13 @@
         const submitBtn = document.getElementById('submitBtn');
         const maxWords = 50; // Número máximo de palabras permitidas
         const maxWordLength = 20; // Longitud máxima permitida para una palabra
-
+    
         // Función para contar palabras y ajustar el contenido si excede el límite
         function checkWordCount() {
             const words = comentarioInput.value.match(/\b\w+\b/g); // Solo contar palabras válidas (alfanuméricas)
             const validWords = words ? words.filter(word => word.length <= maxWordLength) : []; // Filtrar palabras largas
             const wordCount = validWords.length; // Contar las palabras válidas no vacías
-
+    
             if (wordCount > maxWords) {
                 wordCountMessage.textContent = `Máximo de ${maxWords} palabras alcanzado`;
                 submitBtn.disabled = true; // Deshabilitar el botón si se excede el límite
@@ -74,10 +74,10 @@
                 return true; // Devuelve true si está dentro del límite
             }
         }
-
+    
         // Evento input para limitar el texto mientras se escribe
         comentarioInput.addEventListener('input', checkWordCount);
-
+    
         // Evento paste para interceptar el texto pegado y limitarlo
         comentarioInput.addEventListener('paste', function(e) {
             e.preventDefault();
@@ -87,7 +87,7 @@
             const words = combinedText.match(/\b\w+\b/g);
             const validWords = words ? words.filter(word => word.length <= maxWordLength) : [];
             const wordCount = validWords.length;
-
+    
             if (wordCount > maxWords) {
                 comentarioInput.value = validWords.slice(0, maxWords).join(' ');
             } else {
@@ -95,19 +95,33 @@
             }
             checkWordCount();
         });
-
+    
+        // Función para validar que al menos un campo esté lleno
+        function validateForm() {
+            const inputs = document.querySelectorAll('input, textarea'); // Seleccionamos todos los inputs y textarea
+            let filled = false; // Bandera para saber si hay algún campo lleno
+            inputs.forEach(input => {
+                if (input.type !== 'hidden' && input.value.trim() !== '') { // Ignoramos los campos de tipo hidden y verificamos si hay algún campo lleno
+                    filled = true; // Si encontramos un campo lleno, marcamos la bandera como true
+                }
+            });
+            return filled; // Si algún campo está lleno, retornamos true
+        }
+    
         // Validar en el evento submit del formulario
         document.querySelector('form').addEventListener('submit', function(e) {
-            const valid = checkWordCount(); // Llama a la función de validación
-
+            const valid = checkWordCount() && validateForm(); // Validamos tanto las palabras como que al menos un campo esté lleno
+    
             if (!valid) {
-                e.preventDefault(); // Evitar que el formulario se envíe si se excede el límite
-                alert(`El campo de comentarios no puede exceder las ${maxWords} palabras, ni puede tener palabras que excedan los ${maxWordLength} caracteres.`);
+                e.preventDefault(); // Evitar que el formulario se envíe si no hay campos llenos o excede el límite de palabras
+                alert('Por favor, complete al menos un campo antes de enviar el formulario.');
             }
         });
-
+    
         // Deshabilitar el botón inicialmente si el campo de comentarios ya tiene más de 50 palabras o una palabra larga
         checkWordCount();
     </script>
+    
+    
 </body>
 </html>

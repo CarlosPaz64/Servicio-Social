@@ -96,13 +96,25 @@
             checkWordCount();
         });
 
+        // Función para validar que al menos un campo esté lleno
+        function validateForm() {
+            const inputs = document.querySelectorAll('input, textarea'); // Seleccionamos todos los inputs y textarea
+            let filled = false; // Bandera para saber si hay algún campo lleno
+            inputs.forEach(input => {
+                if (input.type !== 'hidden' && input.value.trim() !== '') { // Ignoramos los campos de tipo hidden y verificamos si hay algún campo lleno
+                    filled = true; // Si encontramos un campo lleno, marcamos la bandera como true
+                }
+            });
+            return filled; // Si algún campo está lleno, retornamos true
+        }
+
         // Validar en el evento submit del formulario
         document.querySelector('form').addEventListener('submit', function(e) {
-            const valid = checkWordCount(); // Llama a la función de validación
+            const valid = checkWordCount() && validateForm(); // Validamos tanto las palabras como que al menos un campo esté lleno
 
             if (!valid) {
-                e.preventDefault(); // Evitar que el formulario se envíe si se excede el límite
-                alert(`El campo de comentarios no puede exceder las ${maxWords} palabras, ni puede tener palabras que excedan los ${maxWordLength} caracteres.`);
+                e.preventDefault(); // Evitar que el formulario se envíe si no hay campos llenos o excede el límite de palabras
+                alert('Por favor, complete al menos un campo antes de enviar el formulario y asegúrese de que el campo de comentarios no exceda los límites de palabras.');
             }
         });
 
